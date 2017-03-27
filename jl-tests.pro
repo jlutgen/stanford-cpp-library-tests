@@ -1,64 +1,10 @@
-# Stanford CS 106 B/X Qt Creator project file
-#
-# This file specifies the information about your project to Qt Creator.
-# You should not need to modify this file to complete your assignment.
-#
-# If you need to add files or folders to your project, we recommend the following:
-# - close Qt Creator.
-# - delete your ".pro.user" file and "build_xxxxxxx" directory.
-# - place the new files/folders into your project directory.
-# - re-open and "Configure" your project again.
-#
-# @author Marty Stepp
-#     (past authors/support by Reid Watson, Rasmus Rygaard, Jess Fisher, etc.)
-# @version 2016/12/01
-# - slight tweaks to compiler flags to improve stack trace line generation
-# @version 2016/11/07
-# - better C++11 compiler flag compatibility (courtesy Kevin Miller)
-# @version 2016/10/30
-# - added FONTSIZE back in, but commented out by default
-# @version 2016/10/19
-# - added PROJECT_FILTER option to make it easier to have multiple .pro in same dir (e.g. ADTs HW)
-# @version 2016/10/18
-# - re-disabled Mac stack increase flag
-# @version 2016/10/15
-# - new stricter compiler warning flags (float equality comparison; null pointers; undefined macros; etc.)
-# @version 2016/10/13
-# - split StanfordCPPLib into subfolders: collections, graphics, io, private, system, util
-# @version 2016/09/24
-# - added private/*.cpp to sources
-# - added verification of .pro version by default
-# @version 2016/08/12
-# - fixed Windows release build problems
-# @version 2016/08/04
-# - added flag for throwing errors on op >> parsing (default off)
-# @version 2016/07/22
-# - added support for src/autograder/ directory
-# @version 2016/06/28
-# - fixed bugs with 'copydata' on Windows systems
-# @version 2016/06/24
-# - removed FONTSIZE setting; left to default and app configuration
-# - made output/ folder copy itself to subdir of build directory, if present
-# - improved code flow, structure, and comments
-# @version 2015/04/09
-# - decreased Mac stack size to avoid sporatic crashes on Mac systems
-# @version 2014/11/29
-# - added pthread library on Mac/Linux for running each test in its own thread
-# @version 2014/11/13
-# - fixes related to generating stack traces
-# - support for putting testing files in a src/test/ folder (used in development)
-# @version 2014/11/05
-# - improved/fixed flags for exception-handling
-# @version 2014/10/31
-# - standard autograder-compatible version; should work with all assignments and graders.
-
 TEMPLATE = app
 
 CONFIG += no_include_pwd   # make sure we do not accidentally #include files placed in 'resources'
 CONFIG += warn_off         # turn off default -Wall (we will add it back ourselves)
 CONFIG -= c++11            # turn off default -std=gnu++11
 
-PROJECT_FILTER =
+SRC_SUBDIR = tests-JL-roberts
 
 ###############################################################################
 # BEGIN SECTION FOR SPECIFYING SOURCE/LIBRARY/RESOURCE FILES OF PROJECT       #
@@ -89,44 +35,23 @@ win32 {
 }
 
 # include various source .cpp files and header .h files in the build process
-# (student's source code can be put into project root, or src/ subfolder)
-exists($$PWD/lib/StanfordCPPLib/*.cpp) {
-    SOURCES += $$PWD/lib/StanfordCPPLib/*.cpp
-}
+# (put project code in subfolder $$SRC_SUBDIR of src/ folder)
+
 SOURCES += $$PWD/lib/StanfordCPPLib/collections/*.cpp
 SOURCES += $$PWD/lib/StanfordCPPLib/graphics/*.cpp
 SOURCES += $$PWD/lib/StanfordCPPLib/io/*.cpp
 SOURCES += $$PWD/lib/StanfordCPPLib/private/*.cpp
 SOURCES += $$PWD/lib/StanfordCPPLib/system/*.cpp
 SOURCES += $$PWD/lib/StanfordCPPLib/util/*.cpp
-exists($$PWD/src/$$PROJECT_FILTER*.cpp) {
-    SOURCES += $$PWD/src/$$PROJECT_FILTER*.cpp
-}
-exists($$PWD/src/test/*.cpp) {
-    SOURCES += $$PWD/src/test/*.cpp
-}
-exists($$PWD/$$PROJECT_FILTER*.cpp) {
-    SOURCES += $$PWD/$$PROJECT_FILTER*.cpp
-}
+SOURCES += $$PWD/src/$$SRC_SUBDIR/*.cpp
 
-exists($$PWD/lib/StanfordCPPLib/*.h) {
-    HEADERS += $$PWD/lib/StanfordCPPLib/*.h
-}
 HEADERS += $$PWD/lib/StanfordCPPLib/collections/*.h
 HEADERS += $$PWD/lib/StanfordCPPLib/graphics/*.h
 HEADERS += $$PWD/lib/StanfordCPPLib/io/*.h
 HEADERS += $$PWD/lib/StanfordCPPLib/private/*.h
 HEADERS += $$PWD/lib/StanfordCPPLib/system/*.h
 HEADERS += $$PWD/lib/StanfordCPPLib/util/*.h
-exists($$PWD/src/test/*.h) {
-    HEADERS += $$PWD/src/test/*.h
-}
-exists($$PWD/src/$$PROJECT_FILTER*.h) {
-    HEADERS += $$PWD/src/$$PROJECT_FILTER*.h
-}
-exists($$PWD/$$PROJECT_FILTER*.h) {
-    HEADERS += $$PWD/$$PROJECT_FILTER*.h
-}
+HEADERS += $$PWD/src/$$SRC_SUBDIR/*.h
 
 # directories examined by Qt Creator when student writes an #include statement
 INCLUDEPATH += $$PWD/lib/StanfordCPPLib/
@@ -137,23 +62,11 @@ INCLUDEPATH += $$PWD/lib/StanfordCPPLib/system/
 INCLUDEPATH += $$PWD/lib/StanfordCPPLib/util/
 INCLUDEPATH += $$PWD/src/
 INCLUDEPATH += $$PWD/
-exists($$PWD/src/autograder/*.h) {
-    INCLUDEPATH += $$PWD/src/autograder/
-}
-exists($$PWD/src/test/*.h) {
-    INCLUDEPATH += $$PWD/src/test/
-}
 
 # directories listed as "Other files" in left Project pane of Qt Creator
 OTHER_FILES += $$files(res/*)
 exists($$PWD/*.txt) {
     OTHER_FILES += $$files($$PWD/*.txt)
-}
-exists($$PWD/input/*) {
-    OTHER_FILES += $$files(input/*)
-}
-exists($$PWD/output/*) {
-    OTHER_FILES += $$files(output/*)
 }
 
 ###############################################################################
